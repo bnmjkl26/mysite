@@ -15,6 +15,10 @@ public class MemberActionFactory extends ActionFactory {
 			action = new JoinSuccessAction();
 		} else if( "join".equals( actionName ) ) {
 			action = new JoinAction();
+		} else if( "loginform".equals( actionName ) ) {
+			action = new LoginFormAction();
+		} else if( "login".equals( actionName ) ) {
+			action = new LoginAction();
 		} else {
 			// error 처리 
 			action = new IndexAction();
