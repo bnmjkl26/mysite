@@ -1,3 +1,4 @@
+
 drop table board;
 drop sequence board_no_seq;
 
@@ -7,7 +8,6 @@ no           NUMBER(8),
 title        VARCHAR2(200) NOT NULL,
 content      VARCHAR2(4000) NOT NULL,
 member_no    NUMBER(8),
-member_name  VARCHAR2(30),
 view_cnt     NUMBER(10),
 reg_date     DATE NOT NULL
 ) ;
