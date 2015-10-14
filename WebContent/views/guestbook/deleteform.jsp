@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%
+	String no = request.getParameter( "no" );
+%>
 <!doctype html>
 <html>
 <head>
@@ -8,38 +11,21 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="">로그인</a><li>
-				<li><a href="">회원가입</a><li>
-				<li><a href="">회원정보수정</a><li>
-				<li><a href="">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
+		<jsp:include page="/views/include/header.jsp" flush="false"></jsp:include>
 		<div id="content">
 			<div id="guestbook" class="delete-form">
 				<form method="post" action="/mysite/guestbook">
 					<input type="hidden" name="a" value="delete">
-					<input type='hidden' name="no" value="">
+					<input type='hidden' name="no" value="<%=no %>">
 					<label>비밀번호</label>
 					<input type="password" name="password">
 					<input type="submit" value="확인">
 				</form>
-				<a href="">방명록 리스트</a>
+				<a href="/mysite/guestbook">방명록 리스트</a>
 			</div>
 		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="">안대혁</a></li>
-				<li><a href="">방명록</a></li>
-				<li><a href="">게시판</a></li>
-			</ul>
-		</div>
-		<div id="footer">
-			<p>(c)opyright 2015</p>
-		</div>
+		<jsp:include page="/views/include/navigation.jsp" flush="false"></jsp:include>
+		<jsp:include page="/views/include/footer.jsp" flush="false"></jsp:include>
 	</div>
 </body>
 </html>

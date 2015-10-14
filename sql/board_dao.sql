@@ -12,7 +12,7 @@ select a.no,
        a.title,
 	   a.content,
 	   a.member_no,
-	   b.NAME as member_name,
+	   b.name as member_name,
 	   a.view_cnt,
 	   to_char(a.reg_date, 'yyyy-mm-dd hh:MM:ss')
   from board a,

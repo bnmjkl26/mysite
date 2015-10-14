@@ -23,7 +23,6 @@
 				</div>
 			</div>
 		</div>
-
 		<jsp:include page="/views/include/navigation.jsp" flush="false"></jsp:include>
 		<jsp:include page="/views/include/footer.jsp" flush="false"></jsp:include>
 	</div>

@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 		<div id="navigation">
 			<ul>
-				<li><a href="">kickscar</a></li>
-				<li><a href="">방명록</a></li>
+				<li><a href="/mysite/main">kickscar</a></li>
+				<li><a href="/mysite/guestbook">방명록</a></li>
 				<li><a href="">게시판</a></li>
 			</ul>
 		</div>
