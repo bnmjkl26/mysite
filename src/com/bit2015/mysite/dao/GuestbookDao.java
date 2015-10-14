@@ -41,7 +41,19 @@ public class GuestbookDao {
 				" delete" +
 				"   from guestbook" + 
 				"  where no=? and password=?";
+			
 			PreparedStatement pstmt = connection.prepareStatement( sql );
+			
+			//Statement 를 사용할 때,
+			/*
+			String sql2 = 
+					" delete" +
+					"   from guestbook" + 
+					"  where no=" + vo.getNo() +
+					"    and password=" + vo.getPassword();
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate( sql2 );
+			*/
 			
 			//3. binding
 			pstmt.setLong( 1, vo.getNo() );

@@ -1,4 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.bit2015.mysite.vo.BoardVo" %>
+<%@ page import="com.bit2015.mysite.vo.MemberVo" %>
+<%
+	MemberVo authUser = (MemberVo)session.getAttribute( "authUser" );
+	List<BoardVo> list = (List<BoardVo>)request.getAttribute( "list" );
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,30 +31,34 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
+					<%
+						int totalCount = list.size();
+						int index = 0;
+						for( BoardVo vo : list ) {
+					%>
 					<tr>
-						<td>3</td>
-						<td><a href="">세 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del">삭제</a></td>
+						<td><%=totalCount-index-- %></td>
+						<td><a href="mysite/board?a=view&no=<%=vo.getNo() %>"><%=vo.getTitle() %></a></td>
+						<td><%=vo.getMemberName() %></td>
+						<td><%=vo.getViewCount() %></td>
+						<td><%=vo.getRegDate() %></td>
+						<td>
+							<%
+								if( authUser != null && authUser.getNo() == vo.getMemberNo() ) {
+							%>
+								<a href="/mysite/board?a=delete&no=<%=vo.getNo() %>" class="del">삭제</a>
+							<% 
+								} else {
+							%>
+								&nbsp;
+							<% 
+								}
+							%>
+						</td>
 					</tr>
-					<tr>
-						<td>2</td>
-						<td><a href="">두 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td><a href="">첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
+					<%
+						}
+					%>
 				</table>
 				<div class="bottom">
 					<a href="" id="new-book">글쓰기</a>
