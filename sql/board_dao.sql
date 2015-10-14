@@ -35,4 +35,9 @@ delete
   from board
  where no = 1;  
  	    
+-- update( 조회수 늘리기 )
+update board
+   set view_cnt = view_cnt + 1
+ where no = 1;	    
+
 		
