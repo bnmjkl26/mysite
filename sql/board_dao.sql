@@ -10,14 +10,14 @@ select * from board;
 -- select( 글목록 )
 select a.no,
        a.title,
-	   a.content,
 	   a.member_no,
 	   b.name as member_name,
 	   a.view_cnt,
 	   to_char(a.reg_date, 'yyyy-mm-dd hh:MM:ss')
   from board a,
        member b
- where a.member_no = b.no;
+   where a.member_no = b.no
+order by a.reg_date desc;
  
 -- select( 글보기 )
 select *
