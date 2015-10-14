@@ -61,7 +61,13 @@
 					%>
 				</table>
 				<div class="bottom">
-					<a href="" id="new-book">글쓰기</a>
+					<%
+						if( authUser != null ) {
+					%>
+						<a href="" id="new-book">글쓰기</a>
+					<%
+						}
+					%>
 				</div>				
 			</div>
 		</div>
