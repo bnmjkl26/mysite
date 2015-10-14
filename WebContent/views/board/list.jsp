@@ -38,7 +38,7 @@
 					%>
 					<tr>
 						<td><%=totalCount-index-- %></td>
-						<td><a href="mysite/board?a=view&no=<%=vo.getNo() %>"><%=vo.getTitle() %></a></td>
+						<td><a href="/mysite/board?a=view&no=<%=vo.getNo() %>"><%=vo.getTitle() %></a></td>
 						<td><%=vo.getMemberName() %></td>
 						<td><%=vo.getViewCount() %></td>
 						<td><%=vo.getRegDate() %></td>
