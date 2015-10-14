@@ -37,7 +37,7 @@
 						for( BoardVo vo : list ) {
 					%>
 					<tr>
-						<td><%=totalCount-index-- %></td>
+						<td><%=totalCount-index++ %></td>
 						<td><a href="/mysite/board?a=view&no=<%=vo.getNo() %>"><%=vo.getTitle() %></a></td>
 						<td><%=vo.getMemberName() %></td>
 						<td><%=vo.getViewCount() %></td>

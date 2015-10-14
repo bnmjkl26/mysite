@@ -2,6 +2,7 @@ package com.bit2015.mysite.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,6 +29,61 @@ public class BoardDao {
 		} 
 		
 		return connection;
+	}
+	
+	public BoardVo get( Long no ) {
+		BoardVo vo = null;
+		try{
+			//1. get Connection
+			Connection conn = getConnection();
+			
+			//2. prepare statement
+			String sql = 
+				" select no, title, content, member_no" +
+				"   from board" +
+				"  where no=?";
+			PreparedStatement pstmt = conn.prepareStatement( sql );
+			
+			//3. binding
+			pstmt.setLong( 1, no );
+			
+			//4. execute SQL
+			ResultSet rs = pstmt.executeQuery();
+			if( rs.next() ) {
+				vo = new BoardVo();
+				vo.setNo( rs.getLong( 1 ) );
+				vo.setTitle( rs.getString( 2 ) );
+				vo.setContent( rs.getString( 3 ) );
+				vo.setMemberNo( rs.getLong( 4 ) );
+			}
+		} catch( SQLException ex ) {
+			System.out.println( "SQL Error:" + ex );
+		}
+		
+		return vo;
+	}
+
+	public void increaseViewCount( Long no ) {
+		try{
+			//1. get Connection
+			Connection conn = getConnection();
+			
+			//2. prepare statement
+			String sql = 
+				" update board" +
+				"    set view_cnt = view_cnt + 1" +		
+				"  where no=?";
+			PreparedStatement pstmt = conn.prepareStatement( sql );
+			
+			//3. binding
+			pstmt.setLong( 1, no );
+			
+			//4. execute SQL
+			pstmt.executeUpdate();
+			
+		} catch( SQLException ex ) {
+			System.out.println( "SQL Error:" + ex );
+		}		
 	}
 	
 	public List<BoardVo> getList() {

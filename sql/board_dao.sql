@@ -16,11 +16,11 @@ select a.no,
 	   to_char(a.reg_date, 'yyyy-mm-dd hh:MM:ss')
   from board a,
        member b
-   where a.member_no = b.no
+ where a.member_no = b.no
 order by a.reg_date desc;
  
 -- select( 글보기 )
-select *
+select no, title, content, member_no
   from board
  where no = 1;
 
