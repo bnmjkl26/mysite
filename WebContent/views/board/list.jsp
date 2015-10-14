@@ -64,7 +64,7 @@
 					<%
 						if( authUser != null ) {
 					%>
-						<a href="" id="new-book">글쓰기</a>
+						<a href="/mysite/board?a=write" id="new-book">글쓰기</a>
 					<%
 						}
 					%>
