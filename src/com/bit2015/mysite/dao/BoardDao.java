@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.bit2015.mysite.vo.BoardVo;
-import com.bit2015.mysite.vo.MemberVo;
 
 public class BoardDao {
 	
@@ -135,7 +133,86 @@ public class BoardDao {
 		return list;
 	}
 	
-	public void insert( MemberVo vo ) {
-		
+	public void update( BoardVo vo ) {
+		try {
+			//1. Connection 가져오기
+			Connection connection = getConnection();
+			
+			//2. Statement 준비
+			String sql =
+				" update board" +
+				"    set title=?," +
+				"        content=?" +
+				"  where no=?";
+			PreparedStatement pstmt = connection.prepareStatement( sql );
+			
+			//3. binding
+			pstmt.setString( 1, vo.getTitle() );
+			pstmt.setString( 2, vo.getContent() );
+			pstmt.setLong( 3, vo.getNo() );
+			
+			//4. query 실행
+			pstmt.executeUpdate();
+			
+			//5. 자원정리
+			pstmt.close();
+			connection.close();
+			
+		} catch( SQLException ex ) {
+			System.out.println( "SQL 오류-" + ex );
+		}		
+	}
+	
+	public void delete( Long no ) {
+		try {
+			//1. Connection 가져오기
+			Connection connection = getConnection();
+			
+			//2. Statement 준비
+			String sql = "delete from board where no = ?";
+			PreparedStatement pstmt = connection.prepareStatement( sql );
+			
+			//3. binding
+			pstmt.setLong( 1, no );
+			
+			//4. query 실행
+			pstmt.executeUpdate();
+			
+			//5. 자원정리
+			pstmt.close();
+			connection.close();
+			
+		} catch( SQLException ex ) {
+			System.out.println( "SQL 오류-" + ex );
+		}		
+	}
+	
+	public void insert( BoardVo vo ) {
+		try {
+			//1. Connection 가져오기
+			Connection connection = getConnection();
+			
+			//2. Statement 준비
+			String sql = 
+				" insert" +
+				"   into board" +
+				" values ( board_no_seq.nextval, ?, ?, ?, 0, SYSDATE )";
+			PreparedStatement pstmt = connection.prepareStatement( sql );
+			
+			//3. binding
+			pstmt.setString( 1, vo.getTitle() );
+			pstmt.setString( 2, vo.getContent() );
+			pstmt.setLong( 3, vo.getMemberNo() );
+			
+			//4. query 실행
+			pstmt.executeUpdate();
+			
+			//5. 자원정리
+			pstmt.close();
+			connection.close();
+			
+		} catch( SQLException ex ) {
+			System.out.println( "SQL 오류-" + ex );
+		}		
 	}
 }
