@@ -1,10 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="com.bit2015.mysite.vo.BoardVo"%>
-<%@ page import="com.bit2015.mysite.vo.MemberVo" %>
-<%
-	MemberVo authUser = (MemberVo)session.getAttribute( "authUser" );
-	BoardVo vo = ( BoardVo )request.getAttribute( "board" ); 
-%>
+<% pageContext.setAttribute( "newLine", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +12,7 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/views/include/header.jsp" flush="false"></jsp:include>
+		<c:import url="/views/include/header.jsp"></c:import>
 		<div id="content">
 			<div id="board" class="board-form">
 				<table class="tbl-ex">
@@ -23,31 +21,27 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td><%=vo.getTitle() %></td>
+						<td>${board.title }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-							<%=vo.getContent().replaceAll( "\n", "<br>" ) %>	
+								${fn:replace( board.title, newLine, '<br>' ) }	
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
 					<a href="/mysite/board">글목록</a>
-					<%
-						if( authUser != null && authUser.getNo() == vo.getMemberNo() ) {
-					%>
-						<a href="/mysite/board?a=modify&no=<%=vo.getNo() %>">글수정</a>
-					<%
-						}
-					%>
+					<c:if test='${authUser.no == board.memberNo }'>
+						<a href="/mysite/board?a=modify&no=${board.no }">글수정</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
-		<jsp:include page="/views/include/navigation.jsp" flush="false"></jsp:include>
-		<jsp:include page="/views/include/footer.jsp" flush="false"></jsp:include>
+		<c:import url="/views/include/navigation.jsp"></c:import>
+		<c:import url="/views/include/footer.jsp"></c:import>
 	</div>
 </body>
 </html>

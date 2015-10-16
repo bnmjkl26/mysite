@@ -1,11 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List" %>
-<%@ page import="com.bit2015.mysite.vo.BoardVo" %>
-<%@ page import="com.bit2015.mysite.vo.MemberVo" %>
-<%
-	MemberVo authUser = (MemberVo)session.getAttribute( "authUser" );
-	List<BoardVo> list = (List<BoardVo>)request.getAttribute( "list" );
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +11,7 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/views/include/header.jsp" flush="false"></jsp:include>
+		<c:import url="/views/include/header.jsp"></c:import>
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="" method="post">
@@ -30,49 +26,37 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>				
-					<%
-						int totalCount = list.size();
-						int index = 0;
-						for( BoardVo vo : list ) {
-					%>
-					<tr>
-						<td><%=totalCount-index++ %></td>
-						<td><a href="/mysite/board?a=view&no=<%=vo.getNo() %>"><%=vo.getTitle() %></a></td>
-						<td><%=vo.getMemberName() %></td>
-						<td><%=vo.getViewCount() %></td>
-						<td><%=vo.getRegDate() %></td>
-						<td>
-							<%
-								if( authUser != null && authUser.getNo() == vo.getMemberNo() ) {
-							%>
-								<a href="/mysite/board?a=delete&no=<%=vo.getNo() %>" class="del">삭제</a>
-							<% 
-								} else {
-							%>
-								&nbsp;
-							<% 
-								}
-							%>
-						</td>
 					</tr>
-					<%
-						}
-					%>
+					<c:set var='count' value='${fn:length(list) }' />				
+					<c:forEach items='${list }' var='vo' varStatus='status'>
+						<tr>
+							<td>${count-status.index }</td>
+							<td><a href="/mysite/board?a=view&no=${vo.no }">${vo.title }</a></td>
+							<td>${vo.memberName }</td>
+							<td>${vo.viewCount }</td>
+							<td>${vo.regDate }</td>
+							<td>
+								<c:choose>
+									<c:when test='${authUser.no == vo.memberNo }'>									
+										<a href="/mysite/board?a=delete&no=${vo.no }" class="del">삭제</a>
+									</c:when>
+									<c:otherwise>
+										&nbsp;
+									</c:otherwise>
+								</c:choose>										
+							</td>
+						</tr>
+					</c:forEach>
 				</table>
 				<div class="bottom">
-					<%
-						if( authUser != null ) {
-					%>
+					<c:if test='${empty authUser }'>
 						<a href="/mysite/board?a=write" id="new-book">글쓰기</a>
-					<%
-						}
-					%>
+					</c:if>
 				</div>				
 			</div>
 		</div>
-		<jsp:include page="/views/include/navigation.jsp" flush="false"></jsp:include>
-		<jsp:include page="/views/include/footer.jsp" flush="false"></jsp:include>
+		<c:import url="/views/include/navigation.jsp"></c:import>
+		<c:import url="/views/include/footer.jsp"></c:import>
 	</div>
 </body>
 </html>

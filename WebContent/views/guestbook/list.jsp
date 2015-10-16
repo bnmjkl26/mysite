@@ -1,9 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@page import="java.util.List"%>
-<%@page import="com.bit2015.mysite.vo.GuestbookVo"%>
-<%
-	List<GuestbookVo> list = (List<GuestbookVo>)request.getAttribute( "list" );
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% pageContext.setAttribute( "newLine", "\n" ); %>
 <!doctype html>
 <html>
 <head>
@@ -13,7 +12,7 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/views/include/header.jsp" flush="false"></jsp:include>
+		<c:import url="/views/include/header.jsp"></c:import>
 		<div id="content">
 			<div id="guestbook">
 				<form action="/mysite/guestbook" method="post">
@@ -32,35 +31,30 @@
 					</table>
 				</form>
 				<ul>
-					<%
-						int countTotal = list.size();
-						int index = 0;
-						for( GuestbookVo vo : list ) {
-					%>				
-					<li>
-						<table>
-							<tr>
-								<td>[<%=countTotal-index++ %>]</td>
-								<td><%=vo.getName() %></td>
-								<td><%=vo.getRegDate() %></td>
-								<td><a href="/mysite/guestbook?a=deleteform	&no=<%=vo.getNo() %>">삭제</a></td>
-							</tr>
-							<tr>
-								<td colspan=4>
-								<%=vo.getMessage().replaceAll("\n", "<br>") %>
-								</td>
-							</tr>
-						</table>
-						<br>
-					</li>
-					<%
-						}
-					%>
+					<c:set var='count' value='${fn:length(list) }'/>
+					<c:forEach items='${list }' var='vo' varStatus='status'>			
+						<li>
+							<table>
+								<tr>
+									<td>[${count-status.index }]</td>
+									<td>${vo.name }</td>
+									<td>${vo.regDate }</td>
+									<td><a href="/mysite/guestbook?a=deleteform	&no=${vo.no }">삭제</a></td>
+								</tr>
+								<tr>
+									<td colspan=4>
+									${fn:replace( vo.message, newLine, '<br>' ) }
+									</td>
+								</tr>
+							</table>
+							<br>
+						</li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
-		<jsp:include page="/views/include/navigation.jsp" flush="false"></jsp:include>
-		<jsp:include page="/views/include/footer.jsp" flush="false"></jsp:include>
+		<c:import url="/views/include/navigation.jsp"></c:import>
+		<c:import url="/views/include/footer.jsp"></c:import>
 	</div>
 </body>
 </html>
