@@ -56,6 +56,41 @@ public class MemberDao {
 		}
 	}
 	
+	public MemberVo get( String email ) {
+		MemberVo vo = null;
+		try{
+			//1. get Connection
+			Connection conn = getConnection();
+			
+			//2. prepare statement
+			String sql = 
+				" select no, name, email" +
+				"   from member" +
+				"  where email=?";
+			PreparedStatement pstmt = conn.prepareStatement( sql );
+			
+			//3. binding
+			pstmt.setString( 1, email );
+			
+			//4. execute SQL
+			ResultSet rs = pstmt.executeQuery();
+			if( rs.next() ) {
+				Long no = rs.getLong( 1 );
+				String name = rs.getString( 2 );
+				String email2 = rs.getString( 3 );
+				
+				vo = new MemberVo();
+				vo.setNo(no);
+				vo.setName(name);
+				vo.setEmail(email2);
+			}
+		} catch( SQLException ex ) {
+			System.out.println( "SQL Error:" + ex );
+		}
+		
+		return vo;		
+	}
+	
 	public MemberVo get( String email, String password ) {
 		MemberVo vo = null;
 		try{
