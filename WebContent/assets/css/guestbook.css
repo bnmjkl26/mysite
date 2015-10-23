@@ -26,4 +26,4 @@
 
 #guestbook.delete-message p	{ padding:100px; height:50px; text-align:center }
 
-#guestbook textarea#content	{ width: 100%; border:none; height: 100px; resize: none; outline: none; }
+#guestbook textarea	{ width: 100%; border:none; height: 100px; resize: none; outline: none; }

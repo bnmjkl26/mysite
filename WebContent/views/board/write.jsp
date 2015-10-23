@@ -8,6 +8,21 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="/mysite/assets/css/board.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/mysite/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+$(function(){
+	$( "#board form" ).submit( function(){
+		if( $( "input[name='title']" ).val() == "" ) {
+			return false;
+		}
+		if( $( "#board-content" ).val() == "" ) {
+			return false;
+		}
+		
+		return true;
+	});
+});
+</script>
 </head>
 <body>
 	<div id="container">
@@ -27,7 +42,7 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="board-content" name="content"></textarea>
 							</td>
 						</tr>
 					</table>
