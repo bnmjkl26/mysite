@@ -11,6 +11,37 @@
 <script type="text/javascript" src="/mysite/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
 $(function(){
+	$( "#join-form" ).submit(function(){
+		//이름 체크
+		if( $( "#name" ).val() == "" ) {
+			alert( "이름이 비어 있습니다." );
+			$( "#name" ).focus();
+			return false;
+		}
+		
+		//이메일 중복체크
+		if( $( "#image-checked" ).is( ":visible" ) == false ) {
+			alert( "이메일 중복 체크를 해야 합니다." );
+			$( "#email" ).focus();
+			return false;
+		}
+		
+		//비밀번호
+		if( $( "#password" ).val() == "" ) {
+			alert( "비밀번호가 비어 있습니다." );
+			$( "#password" ).focus();
+			return false;
+		}
+		
+		//약관동의
+		if( $( "#agree-prov" ).is( ":checked" ) == false ) {
+			alert( "약관 동의를 해 주세요." );
+			return false;
+		}
+		
+		return true;	
+	});
+	
 	$( "#email" ).change( function(){
 		$( "#image-checked" ).hide();
 		$( "#btn-checkemail" ).show();	
@@ -18,6 +49,9 @@ $(function(){
 	
 	$( "#btn-checkemail" ).click( function() {
 		var email = $( "#email" ).val();
+		if( email == "" ) {
+			return;
+		}
 		//ajax 통신
 		$.ajax( {
 			url : "/mysite/api/member",
@@ -63,7 +97,7 @@ $(function(){
 					<input id="btn-checkemail" type="button" value="id 중복체크">
 					
 					<label class="block-label">패스워드</label>
-					<input name="password" type="password" value="">
+					<input id="password" name="password" type="password" value="">
 					
 					<fieldset>
 						<legend>성별</legend>
