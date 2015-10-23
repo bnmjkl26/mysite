@@ -61,7 +61,12 @@ $(function(){
 			contentType: 'application/json',
 			success: function( response ){
 				console.log( response );
-				if( response.result == "exist" ) {
+				if( response.result == "fail" ) {
+					console.error( response.message );
+					return;
+				}
+				
+				if( response.data == false ) {
 					alert( "사용중 인 이메일입니다. 다른 이메일을 사용해 주세요." );
 					$( "#email" ).focus();
 					return;
