@@ -9,13 +9,31 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="/mysite/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/mysite/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+$(function() {
+	$( "#write-form" ).submit( function(){
+		if( $( "input[name='name']" ).val() == "" ) {
+			return false;
+		}
+		if( $( "input[name='pass']" ).val() == "" ) {
+			return false;
+		}
+		if( $( "#textarea-content" ).val() == "" ) {
+			return false;
+		}
+		
+		return true;
+	});	
+});
+</script>
 </head>
 <body>
 	<div id="container">
 		<c:import url="/views/include/header.jsp"></c:import>
 		<div id="content">
 			<div id="guestbook">
-				<form action="/mysite/guestbook" method="post">
+				<form id="write-form" action="/mysite/guestbook" method="post">
 					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
@@ -23,7 +41,7 @@
 							<td>비밀번호</td><td><input type="password" name="pass"></td>
 						</tr>
 						<tr>
-							<td colspan=4><textarea name="content" id="content"></textarea></td>
+							<td colspan=4><textarea name="content" id="textarea-content"></textarea></td>
 						</tr>
 						<tr>
 							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
